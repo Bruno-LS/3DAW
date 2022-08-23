@@ -1,0 +1,17 @@
+<!Doctype html>
+    <html>
+        <head>
+            <title>Bruno</title>
+        </head>
+
+        <body>
+            <h1>alo mundo<h1> 
+            <form action="TEST.php" method="POST">
+                <input type="text"  name="matricula"><br>
+                <input type="text"  name="nome">
+                <input type="submit"  value="coisar">
+
+            </form>
+
+        </body>
+    </html>
