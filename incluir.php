@@ -1,63 +1,57 @@
 <?php
-$ehPost = true;
-if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    $nome = $_POST ["nome"]; 
-    $matricula= $_POST["matricula"];
-echo json_encode($_POST["nome"]);
-echo json_encode($_POST["matricula"]);
-
-    if($nome == NULL  || $matricula== NULL)
-    {
-        echo "Nao foi <br>";
+  include("server.php");
+$bolCriar = false;
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $conn = new mysqli($servidor, $usuario, $senha, $bancodeDados);
+    if ($conn->connect_error) {
+        die("Conexao com o banco de dados falhou!!!");
     }
-    else if(!file_exists("Dojo.json")) {
-       $arquivo = fopen ("Dojo.json", "w");
-       $cabecalho = "{\"Aluno\":[";
-       fwrite($arquivo, $cabecalho);
-    
 
-       $linha = ($nome.";".$matricula.";");
 
-       fwrite($arquivo, $linha);
-       fwrite($arquivo, $footer);
+    if (isset($_POST["incluir"])) {
+        $nome = $_POST["Nome"];
+        $mat = $_POST["Matricula"];
+        $AV1 = $_POST["AV1"];
+        $AV2 = $_POST["AV2"];
 
-       fclose($arquivo);
+        $sqlCriar = "INSERT into `registroalunos`(`nome`, `matricula`, `AV1`, `AV2`) VALUES ('$nome','$mat','$AV1', '$AV2')";
 
+        if (!$conn->query($sqlCriar)) {
+            echo("Error description: " . $conn->error);
+        } else {
+            $bolCriar = true;
+        }
     }
-    else {
-        $arquivo = fopen("Dojo.json", "a+");        
-        
-       // foreach ($arquivo as $linha) {
-            $linha = json_encode($nome.";".$matricula.";");
-           // $footer = "] \n }";
+        }
 
-            fwrite($arquivo, $linha);
-           // fwrite($arquivo,$footer);
-       // }
-
-
-        fclose($arquivo);
-    }
-}
 ?>
+
+
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
+
 <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Dojo</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOME</title>
+
+    <link rel="stylesheet" type="text/css" href="nav.css" />
+    <script src="form_js.js"></script>
+
 </head>
+
 <body>
-    <form action="incluir.php" method="POST">
-        <fieldset>
-            <label>Nome:</label> 
-            <input type="text" name="nome">
-            <label>Matricula:</label> 
-            <input type="text" name="matricula"> <br>
-            <input type="submit" value="incluir">
-        </fieldset>
-    </form>
-    
+
+    <section>
+        <input type="submit" value="Incluir" onclick="fom('incluir')">
+        <input type="submit" value="Alterar" onclick="fom('alterar')">
+        <input type="submit" value="Excluir" onclick="fom('excluir')">
+        <input type="submit" value="Listar/Buscar" onclick="fom('listar')">
+    </section>
+    <p id="form"></p>
+
+    <?php if($bolCriar == true){ echo("<p style=\"margin-top: 0px;\">Aluno Criado!</p>");} ?>
 </body>
+
 </html>
