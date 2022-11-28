@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>HOME</title>
+
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <script>
+            function enviarForm() {
+                let selecaoA = document.getElementById("selecaoA").value;
+                let selecaoB = document.getElementById("selecaoB").value;
+                let golsA = document.getElementById("golsA").value;
+                let golsB = document.getElementById("golsB").value;
+                let local = document.getElementById("local").value;
+                let data = document.getElementById("data").value;
+                let hora = document.getElementById("hora").value;
+                
+                let xmlHttp = new XMLHttpRequest();
+                xmlHttp.open("GET", "http://localhost/DAW/PHP/trab_copa/minha_copa/Phps/cadastrarJogo.php?data=" + data +
+                    "&hora=" + hora + "&local=" + local + "&selecaoA=" + selecaoA + "&selecaoB=" + selecaoB + "&golsA=" + golsA + "&golsB=" + golsB);
+                xmlHttp.send();
+                console.log(xmlHttp.responseText);
+                location.reload();
+            }
+        </script>
+    </head>
+
+    <body>
+
+        <a href="index.html"><h1>CRUD COPA</h1></a>
+        <section id="dis">
+            <h2>Seleções e Grupos</h2>
+            <a href="inserirSele.html">Inserir Seleção</a>
+            <a href="alterarSele.html">Alterar Seleção</a>
+            <a href="calendarioSele.html">Calendário de uma Seleção</a>
+            <a href="calendarioGrupo.html">Calendário de um Grupo</a>
+        </section>
+        <br><br>
+        <section id="usu">
+            <h2>Jogos</h2>
+            <a href="cadastrarJogo.html">Cadastrar Jogo</a>
+            <a href="resultJogo.html">Resultado do Jogo</a>
+            <a href="calendarioJogos.html">Calendário Jogos</a>
+            <a href="oitavas.html">Mostrar Oitavas de Final</a>
+        </section>
+
+        <!-- Ajeitar isso -->
+        <form id="formJogo">
+            <fieldset>
+                <legend>Digite os Dados do Jogo</legend>
+    
+                <label>Data do Jogo:</label>
+                <input type="text" name="data" id="data"><br><br>
+                <label>Hora do Jogo:</label>
+                <input type="text" name="hora" id="hora"><br><br>
+                <label>Local do Jogo:</label>
+                <input type="text" name="local" id="local"><br><br>
+                <label>Nome da seleção A:</label>
+                <input type="text" name="selecaoA" id="selecaoA"><br><br>
+                <label>Nome da seleção B:</label>
+                <input type="text" name="selecaoB" id="selecaoB"><br><br>
+                <label>Gols da Seleção A:</label>
+                <input type="text" name="golsA" id="golsA"><br><br>
+                <label>Gols da Seleção B:</label>
+                <input type="text" name="golsB" id="golsB"><br><br>
+                <input type="button" name="envio" value="Enviar" onclick="enviarForm();">
+            </fieldset>
+        </form>
+
+    </body>
+
+</html>

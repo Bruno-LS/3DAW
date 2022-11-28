@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>HOME</title>
+
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <script>
+           function carregaJogo() {
+
+                let nomeA = document.getElementById("nomeA").value;
+                let nomeB = document.getElementById("nomeB").value;
+
+                let xmlHttp = new XMLHttpRequest();
+                xmlHttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        let obj = JSON.parse(this.responseText);
+                        let x = 0;
+
+                        let valor = (obj[x].local).localeCompare("undefined");
+                        if (valor != 0) {
+                            for (x = 0; x < obj.length; x++) {
+                                let linha = obj[x];
+                                criarLinhaTabela(linha);
+                            }
+                        }
+                    }
+                }
+                xmlHttp.open("GET", "http://localhost/DAW/PHP/trab_copa/minha_copa/Phps/resultJogo.php?nomeA=" + nomeA + "&nomeB=" + nomeB);
+                xmlHttp.send();
+
+            }
+
+                function criarLinhaTabela(linha) {
+                    let tabela = document.getElementById("tabela");
+                    let tr = document.createElement("tr");
+
+                    //Coluna data
+                    let tdData = document.createElement("td");
+                    textnode = document.createTextNode(linha.data);
+                    tdData.appendChild(textnode);
+                    tr.appendChild(tdData);
+
+                    //Coluna hora
+                    let tdHora = document.createElement("td");
+                    textnode = document.createTextNode(linha.hora);
+                    tdHora.appendChild(textnode);
+                    tr.appendChild(tdHora);
+
+                    //Coluna Local
+                    let tdLocal = document.createElement("td");
+                    textnode = document.createTextNode(linha.local);
+                    tdLocal.appendChild(textnode);
+                    tr.appendChild(tdLocal);
+
+                    //Coluna SelecaoA
+                    let tdSelA = document.createElement("td");
+                    textnode = document.createTextNode(linha.selecaoA);
+                    tdSelA.appendChild(textnode);
+                    tr.appendChild(tdSelA);
+
+                    //Coluna golsA
+                    let tdGolA = document.createElement("td");
+                    textnode = document.createTextNode(linha.golsA);
+                    tdGolA.appendChild(textnode);
+                    tr.appendChild(tdGolA);
+
+                    //Coluna SelecaoB
+                    let tdSelB = document.createElement("td");
+                    textnode = document.createTextNode(linha.selecaoB);
+                    tdSelB.appendChild(textnode);
+                    tr.appendChild(tdSelB);
+
+                    //Coluna golsB
+                    let tdGolB = document.createElement("td");
+                    textnode = document.createTextNode(linha.golsB);
+                    tdGolB.appendChild(textnode);
+                    tr.appendChild(tdGolB);
+
+                    tabela.appendChild(tr);
+                    tabela.style.display = "table";
+                    let inputA = document.getElementById("nomeA");
+                    inputA.setAttribute("onclick", "location.reload();");
+                    let inputB = document.getElementById("nomeB");
+                    inputB.setAttribute("onclick", "location.reload();");
+                }
+        </script>
+    </head>
+
+    <body>
+
+        <a href="index.html"><h1>CRUD COPA</h1></a>
+        <section id="dis">
+            <h2>Seleções e Grupos</h2>
+            <a href="inserirSele.html">Inserir Seleção</a>
+            <a href="alterarSele.html">Alterar Seleção</a>
+            <a href="calendarioSele.html">Calendário de uma Seleção</a>
+            <a href="calendarioGrupo.html">Calendário de um Grupo</a>
+        </section>
+        <br><br>
+        <section id="usu">
+            <h2>Jogos</h2>
+            <a href="cadastrarJogo.html">Cadastrar Jogo</a>
+            <a href="resultJogo.html">Resultado do Jogo</a>
+            <a href="calendarioJogos.html">Calendário Jogos</a>
+            <a href="oitavas.html">Mostrar Oitavas de Final</a>
+        </section>
+
+        <!-- Ajeitar isso -->
+        <form id="form">
+            <fieldset>
+                <legend style="font-size: 20px;">Digite o nome das Seleção que jogaram</legend>
+                <label>Nome da Primeira Seleção:</label>
+                <input type="text" name="nomeA" id="nomeA"><br><br>
+                <label>Nome da Segunda Seleção:</label>
+                <input type="text" name="nomeB" id="nomeB"><br><br>
+                <input type="button" name="envio" value="Enviar" onclick="carregaJogo();">
+            </fieldset>
+        </form>
+    
+        <table id="tabela">
+            <tr>
+                <th>Data</th>
+                <th>Hora</th>
+                <th>Local</th>
+                <th>Equipe A</th>
+                <th>Gols</th>
+                <th>Equipe B</th>
+                <th>Gols</th>
+            </tr>
+        </table>
+
+    </body>
+
+</html>

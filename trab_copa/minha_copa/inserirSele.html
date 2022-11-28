@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>HOME</title>
+
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <script>
+            function enviarForm() {
+                let nome = document.getElementById("nome").value;
+                let grupo = document.getElementById("grupo").value;
+                let tecnico = document.getElementById("tecnico").value;
+                let xmlHttp = new XMLHttpRequest();
+                xmlHttp.open("GET", "http://localhost/DAW/PHP/trab_copa/minha_copa/Phps/inserirSele.php?nome=" + nome +
+                    "&grupo=" + grupo + "&tecnico=" + tecnico);
+                xmlHttp.send();
+
+                location.reload();
+            }
+        </script>
+    </head>
+
+    <body>
+
+        <a href="index.html"><h1>CRUD COPA</h1></a>
+        <section id="dis">
+            <h2>Seleções e Grupos</h2>
+            <a href="inserirSele.html">Inserir Seleção</a>
+            <a href="alterarSele.html">Alterar Seleção</a>
+            <a href="calendarioSele.html">Calendário de uma Seleção</a>
+            <a href="calendarioGrupo.html">Calendário de um Grupo</a>
+        </section>
+        <br><br>
+        <section id="usu">
+            <h2>Jogos</h2>
+            <a href="cadastrarJogo.html">Cadastrar Jogo</a>
+            <a href="resultJogo.html">Resultado do Jogo</a>
+            <a href="calendarioJogos.html">Calendário Jogos</a>
+            <a href="oitavas.html">Mostrar Oitavas de Final</a>
+        </section>
+
+        <!-- Ajeitar isso -->
+        <form>
+            <fieldset>
+                <legend>Digite os Dados da Seleção</legend>
+
+                <label>Nome da seleção:</label>
+                <input type="text" name="nome" id="nome"><br><br>
+                <label>Grupo da Seleção:</label>
+                <input type="text" name="grupo" id="grupo"><br><br>
+                <label>Nome do Técnico da Seleção:</label>
+                <input type="text" name="tecnico" id="tecnico"><br><br>
+                <input type="button" name="envio" value="Enviar"
+                    onclick="enviarForm();">
+            </fieldset>
+        </form>
+
+    </body>
+
+</html>
